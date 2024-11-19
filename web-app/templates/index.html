@@ -1,16 +1,11 @@
 {% block body %}
-    <h2>Your Swear Jar</h2>
-    <div id="swearJar">
-        <h3>Swear Counts:</h3>
-        <ul id="swearList">
-            <!-- fill with swear words from database-->
-        </ul>
-        <p>Total Swears: 
-            <span id="totalSwears">
-                0
-            </span>
-        </p>
-    </div>
+<head>
+</head>
+    <h2>Counter</h2>
+    {% if swears %}
+    <p>Swears: {{swears}}</p>
+    {% endif %}
+    </ul>
 
     <button id="requestMicButton">Request Microphone Access</button>
     <button id="stop">Stop</button>
@@ -54,15 +49,37 @@
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
-                console.log('Microphone access granted:', stream);
 
                 // Handle data available from the media recorder
                 mediaRecorder.ondataavailable = (e) => {
                     chunks.push(e.data);
                 };
                 mediaRecorder.start();
+                let track = stream.getAudioTracks()[0];
+                console.log(track.getCapabilities());
+
                 console.log(mediaRecorder.state);
 
+                intervalCount = setInterval(() => {
+                    if(mediaRecorder.state == 'recording'){
+                        mediaRecorder.stop();
+                    }
+                }, 10000) 
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    chunks = [];
+                    
+                    const formData = new FormData();
+                    formData.append('audio', blob, 'recording.webm');
+
+                    fetch('/upload', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => console.log(response))
+
+                    mediaRecorder.start();
+                }
             } catch (err) {
                 console.error('Error accessing microphone:', err);
             }
@@ -71,10 +88,12 @@
         // Event listener for stopping the recording
         stopButton.addEventListener('click', () => {
             if (mediaRecorder) {
+                clearInterval(intervalCount);
                 mediaRecorder.stop();
-                console.log(mediaRecorder.state);
-                // You can save or process the recorded data here
-                console.log(mediaRecorder.mimeType);
+                
+                mediaRecorder.onstop = () => {
+                    console.log(mediaRecorder.state)
+                };
             }
         });
     </script>

@@ -59,6 +59,14 @@
                 console.log(track.getCapabilities());
 
                 console.log(mediaRecorder.state);
+                /*
+                //for test use
+                intervalCount = setInterval(() => {
+                    if(mediaRecorder.state == 'recording'){
+                        mediaRecorder.stop();
+                    }
+                }, 3000) 
+                */
 
                 intervalCount = setInterval(() => {
                     if(mediaRecorder.state == 'recording'){

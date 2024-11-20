@@ -32,7 +32,6 @@ def get_swear_counts():
     return jsonify(swear_counts)
 
 @app.route('/upload', methods=['POST'])
-
 def upload_audio():
     if 'audio' not in request.files:
         return jsonify({"error": "No file part"}), 400
@@ -78,4 +77,9 @@ def upload_audio():
         return jsonify({"transcription": transcription_text}), 200
 
         #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
-    excep
+    except Exception as e:
+        print(f"Error during processing: {e}")
+        return jsonify({"error": f"Error processing the audio file: {str(e)}"}), 500
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=3000)

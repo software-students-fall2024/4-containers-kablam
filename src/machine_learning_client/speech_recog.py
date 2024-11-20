@@ -1,8 +1,6 @@
-'''
-import os
 import speech_recognition as sr
 
-def transcribe(file_path):
+def transcription(file_path):
     r = sr.Recognizer()
     try:
         with sr.AudioFile(file_path) as source:
@@ -16,4 +14,3 @@ def transcribe(file_path):
         raise ValueError("Audio cannot be understood")
     except sr.RequestError as e:
         raise RuntimeError(f"API error; {e}")
-'''

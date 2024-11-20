@@ -1,15 +1,15 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
+from src.machine_learning_client.speech_recog import transcription
 import os
 import subprocess
-import speech_recognition as sr
+#import speech_recognition as sr
 
 app = Flask(__name__)
 client = MongoClient("mongodb://localhost:27017/")
 db = client["swearDB"] 
 swears_collection = db["swears"]
 user_input = db["audio and transcription"]
-
 
 @app.route("/")
 def index():
@@ -75,21 +75,6 @@ def upload_audio():
     except Exception as e:
         print(f"Error during processing: {e}")
         return jsonify({"error": f"Error processing the audio file: {str(e)}"}), 500
-
-# I'm not sure if I should put the recognition thing here or in a separate file under machine-learning-client   
-def transcription(file_path):
-    r = sr.Recognizer()
-    try:
-        with sr.AudioFile(file_path) as source:
-            r.adjust_for_ambient_noise(source, duration = 0.2)
-            audio = r.record(source)
-            text = r.recognize_google(audio)
-            text = text.lower()
-            return text
-    except sr.UnknownValueError:
-        raise ValueError("Audio cannot be understood")
-    except sr.RequestError as e:
-        raise RuntimeError(f"API error; {e}")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)

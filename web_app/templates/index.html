@@ -18,6 +18,7 @@
         const stopButton = document.getElementById('stop');
         let mediaRecorder;
         let chunks = [];
+        let transcriptionAll = [];
 
         // Update swear jar
         async function updateSwearJar(){
@@ -91,8 +92,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.transcription){
+                            transcriptionAll.push(data.transcription);
                             const transcribeLine = document.getElementById('transcription')
-                            transcribeLine.textContent = data.transcription;
+                            transcribeLine.textContent = transcriptionAll.join(" ");
                         }else if (data.error) {
                             console.error('Error in server response:', data.error);
                         }

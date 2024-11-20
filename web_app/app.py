@@ -78,9 +78,4 @@ def upload_audio():
         return jsonify({"transcription": transcription_text}), 200
 
         #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
-    except Exception as e:
-        print(f"Error during processing: {e}")
-        return jsonify({"error": f"Error processing the audio file: {str(e)}"}), 500
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+    excep

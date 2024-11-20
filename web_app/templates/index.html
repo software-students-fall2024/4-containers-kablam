@@ -9,6 +9,9 @@
 
     <button id="requestMicButton">Request Microphone Access</button>
     <button id="stop">Stop</button>
+    <div>
+        <p id = "transcription">Say something!</p>
+    </div>
 
     <script>
         const requestMicButton = document.getElementById('requestMicButton');
@@ -59,21 +62,21 @@
                 console.log(track.getCapabilities());
 
                 console.log(mediaRecorder.state);
-                /*
+                
                 //for test use
                 intervalCount = setInterval(() => {
                     if(mediaRecorder.state == 'recording'){
                         mediaRecorder.stop();
                     }
                 }, 3000) 
-                */
-
+                
+/*
                 intervalCount = setInterval(() => {
                     if(mediaRecorder.state == 'recording'){
                         mediaRecorder.stop();
                     }
                 }, 10000) 
-
+*/
                 mediaRecorder.onstop = () => {
                     const blob = new Blob(chunks, { type: 'audio/webm' });
                     chunks = [];
@@ -84,7 +87,17 @@
                     fetch('/upload', {
                         method: 'POST',
                         body: formData
-                    }).then(response => console.log(response))
+                    })//.then(response => console.log(response))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.transcription){
+                            const transcribeLine = document.getElementById('transcription')
+                            transcribeLine.textContent = data.transcription;
+                        }else if (data.error) {
+                            console.error('Error in server response:', data.error);
+                        }
+                    })
+                    .catch(console.error);
 
                     mediaRecorder.start();
                 }

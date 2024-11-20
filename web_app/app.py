@@ -1,7 +1,13 @@
+# for test only (in order to enable app.py to find the src folder without build the image)
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
+# for project use
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from src.machine_learning_client.speech_recog import transcription
-import os
+#import os
 import subprocess
 #import speech_recognition as sr
 

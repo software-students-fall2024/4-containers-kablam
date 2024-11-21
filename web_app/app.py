@@ -20,8 +20,7 @@ user_input = db["audio and transcription"]
 @app.route("/")
 def index():
     total_swears = sum(doc["count"] for doc in swears_collection.find())
-    #return render_template("index.html", swears=total_swears)
-    return render_template("index.html", swears=0)
+    return render_template("index.html", swears=total_swears)
 
 @app.route("/api/swears", methods=["GET"])
 def get_swear_counts():

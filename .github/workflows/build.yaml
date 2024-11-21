@@ -20,7 +20,7 @@ jobs:
       - name: Build ML client
         run: |
           pipenv install build
-          python -m build
+          python3 -m build
       - name: Turn on editable mode install
         run: |
           pipenv install -e .

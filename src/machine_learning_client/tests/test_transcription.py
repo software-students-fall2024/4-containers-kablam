@@ -7,6 +7,6 @@ import pytest
 from speech_recog import transcription
 
 def test_transcribe_normal_hello():
-    text = transcription("/Users/williamxie/Software Engineer Fall 24/4-containers-kablam/src/machine_learning_client/tests/normalAudio.wav")
+    text = transcription("./normalAudio.wav")
     print(text);
     assert text == "hello my name is william"

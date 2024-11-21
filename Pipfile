@@ -4,10 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pylint = "*"
-black = "*"
+audiototext = {file = "src/machine_learning_client", editable = true}
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"

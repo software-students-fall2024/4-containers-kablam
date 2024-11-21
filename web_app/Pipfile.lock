@@ -1,11 +1,7 @@
 {
     "_meta": {
         "hash": {
-
-            "sha256": "7c8eb190bb67ea610920132efe868ab1b02f34969c2871edc85025289b62fa61"
-
             "sha256": "7a7b54fee4cf67941d0ceeb448925aa82b12c7f5b93a67f057995ce55db979d3"
-
         },
         "pipfile-spec": 6,
         "requires": {
@@ -207,7 +203,6 @@
             "markers": "python_version >= '3.8'",
             "version": "==0.3.9"
         },
-
         "dnspython": {
             "hashes": [
                 "sha256:b4c34b7d10b51bcc3a5071e7b8dee77939f1e878477eeecc965e9835f63c6c86",
@@ -215,7 +210,7 @@
             ],
             "markers": "python_version >= '3.9'",
             "version": "==2.7.0"
-
+        },
         "ffmpeg-python": {
             "hashes": [
                 "sha256:65225db34627c578ef0e11c8b1eb528bb35e024752f6f10b78c011f6f64c4127",
@@ -223,7 +218,6 @@
             ],
             "index": "pypi",
             "version": "==0.2.0"
-
         },
         "flask": {
             "hashes": [
@@ -581,7 +575,6 @@
             "markers": "python_full_version >= '3.9.0'",
             "version": "==3.3.1"
         },
-
         "pymongo": {
             "hashes": [
                 "sha256:0783e0c8e95397c84e9cf8ab092ab1e5dd7c769aec0ef3a5838ae7173b98dea0",
@@ -647,7 +640,7 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==4.10.1"
-
+        },
         "requests": {
             "hashes": [
                 "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760",
@@ -663,7 +656,6 @@
             ],
             "markers": "python_version >= '3.9'",
             "version": "==75.5.0"
-
         },
         "tomli": {
             "hashes": [

@@ -6,7 +6,12 @@ name = "pypi"
 [packages]
 pylint = "*"
 black = "*"
-pytest = "*"
+jinja2 = "*"
+flask = "*"
+pymongo = "*"
+moviepy = "*"
+ffmpeg-python = "*"
+opencv-python = "*"
 
 [dev-packages]
 

@@ -1,0 +1,30 @@
+name: ML Client Tests
+on:
+  # push:
+  pull_request:
+    types: [opened, closed]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: kojoru/prepare-pipenv@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Build ML client
+        run: |
+          pipenv install build
+          pipenv --venv
+          pipenv run python -m build src/machine_learning_client
+      - name: Turn on editable mode install
+        run: |
+          pipenv install -e src/machine_learning_client
+      - name: Run the tests
+        run: |
+          pipenv install pytest
+          pipenv run python -m pytest

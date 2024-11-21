@@ -1,0 +1,123 @@
+{% block body %}
+<head>
+</head>
+    <h2>Counter</h2>
+    {% if swears %}
+    <p>Swears: {{swears}}</p>
+    {% endif %}
+    </ul>
+
+    <button id="requestMicButton">Request Microphone Access</button>
+    <button id="stop">Stop</button>
+    <div>
+        <p id = "transcription">Say something!</p>
+    </div>
+
+    <script>
+        const requestMicButton = document.getElementById('requestMicButton');
+        const stopButton = document.getElementById('stop');
+        let mediaRecorder;
+        let chunks = [];
+        let transcriptionAll = [];
+
+        // Update swear jar
+        async function updateSwearJar(){
+            try{
+                fetch('/api/swears').then(res => res.json()).then(console.log).catch(console.error);
+
+                const response = await fetch('/api/swears');
+                const data = await response.json();
+
+                const swearList = document.getElementById('swearList');
+                const totalSwears = document.getElementById('totalSwears');
+                swearList.innerHTML = "";
+                let total = 0;
+
+                for(const[word, count] of Object.entries(data)){
+                    const li = document.createElement('li');
+                    li.textContent = `${word}: ${count}`;
+                    swearList.appendChild(li);
+                    total += count;
+                }
+                totalSwears.textContent = total;
+            }catch(err){
+                console.error('Error fetching swear counts:', err);
+            }
+        }
+
+        // Call updateSwearJar on page load
+        window.onload = updateSwearJar;
+
+        // Event listener for requesting microphone access
+        requestMicButton.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                // Handle data available from the media recorder
+                mediaRecorder.ondataavailable = (e) => {
+                    chunks.push(e.data);
+                };
+                mediaRecorder.start();
+                let track = stream.getAudioTracks()[0];
+                console.log(track.getCapabilities());
+
+                console.log(mediaRecorder.state);
+                
+                //for test use
+                intervalCount = setInterval(() => {
+                    if(mediaRecorder.state == 'recording'){
+                        mediaRecorder.stop();
+                    }
+                }, 3000) 
+                
+/*
+                intervalCount = setInterval(() => {
+                    if(mediaRecorder.state == 'recording'){
+                        mediaRecorder.stop();
+                    }
+                }, 10000) 
+*/
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    chunks = [];
+                    
+                    const formData = new FormData();
+                    formData.append('audio', blob, 'recording.webm');
+
+                    fetch('/upload', {
+                        method: 'POST',
+                        body: formData
+                    })//.then(response => console.log(response))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.transcription){
+                            transcriptionAll.push(data.transcription);
+                            const transcribeLine = document.getElementById('transcription')
+                            transcribeLine.textContent = transcriptionAll.join(" ");
+                        }else if (data.error) {
+                            console.error('Error in server response:', data.error);
+                        }
+                    })
+                    .catch(console.error);
+
+                    mediaRecorder.start();
+                }
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+            }
+        });
+
+        // Event listener for stopping the recording
+        stopButton.addEventListener('click', () => {
+            if (mediaRecorder) {
+                clearInterval(intervalCount);
+                mediaRecorder.stop();
+                
+                mediaRecorder.onstop = () => {
+                    console.log(mediaRecorder.state)
+                };
+            }
+        });
+    </script>
+{% endblock %}

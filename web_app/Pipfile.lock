@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7a7b54fee4cf67941d0ceeb448925aa82b12c7f5b93a67f057995ce55db979d3"
+            "sha256": "6d6af45c6730dfe50c0beaac09ef661adcd1b3f1ad42fe761ba4c4494aab6b10"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.10"
+            "python_version": "3.11"
         },
         "sources": [
             {
@@ -23,6 +23,10 @@
             ],
             "markers": "python_full_version >= '3.9.0'",
             "version": "==3.3.5"
+        },
+        "audiototext": {
+            "editable": true,
+            "file": "../src/machine_learning_client"
         },
         "black": {
             "hashes": [
@@ -657,6 +661,14 @@
             "markers": "python_version >= '3.9'",
             "version": "==75.5.0"
         },
+        "speechrecognition": {
+            "hashes": [
+                "sha256:a5be29ae95852969045c3c0d1dc0ed49cf48246d899a39591abbc75ff17ccb86",
+                "sha256:a5ecc0bb61d7d9bf0ca70427cd4fea07c38e26c647b5577137596033677b5f34"
+            ],
+            "markers": "python_version >= '3.9'",
+            "version": "==3.11.0"
+        },
         "tomli": {
             "hashes": [
                 "sha256:3f646cae2aec94e17d04973e4249548320197cfabdf130015d023de4b74d8ab8",
@@ -686,7 +698,7 @@
                 "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d",
                 "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"
             ],
-            "markers": "python_version < '3.11'",
+            "markers": "python_version >= '3.8'",
             "version": "==4.12.2"
         },
         "urllib3": {

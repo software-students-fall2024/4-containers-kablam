@@ -12,6 +12,7 @@ pymongo = "*"
 moviepy = "*"
 ffmpeg-python = "*"
 opencv-python = "*"
+audiototext = {file = "../src/machine_learning_client", editable = true}
 
 [dev-packages]
 

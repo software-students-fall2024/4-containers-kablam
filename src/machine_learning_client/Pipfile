@@ -7,6 +7,9 @@ name = "pypi"
 pylint = "*"
 black = "*"
 pytest = "*"
+speechrecognition = "*"
+build = "*"
+audiototext = {file = ".", editable = true}
 
 [dev-packages]
 

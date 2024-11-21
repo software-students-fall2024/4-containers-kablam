@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audiototext"
+description = "A package you can use to transcribe text from an audio file."
+version = "1.0"
+authors = [
+    {name = "Madison Phung", email = "mkp6075@nyu.edu"},
+    {name = "Stephen Spencer-Wong", email = "srs9979@nyu.edu"},
+    {name = "May Zhou", email = "zz4206@nyu.edu"},
+    {name = "William Xie", email = "wx2114@nyu.edu"}
+]
+license = {file = "LICENSE"}
+readme = "README.md"
+keywords = ["python", "package", "audio", "transcription", "text"]
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Education",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "speechrecognition"
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.urls]
+"Repository" = "https://github.com/software-students-fall2024/4-containers-kablam/"

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,9 @@
             color: #333;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             color: #0056b3;
         }
 
@@ -83,6 +86,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -139,7 +143,7 @@
 
                 // change image based on num of swears
                 if (total === 0) {
-                    swearJarImage.src = "/static/images/empty-jar.png"; 
+                    swearJarImage.src = "/static/images/empty-jar.png";
                 } else if (total < 20) {
                     swearJarImage.src = "/static/images/swear-jar.png";
                 } else {
@@ -171,43 +175,42 @@
                 console.log(track.getCapabilities());
 
                 console.log(mediaRecorder.state);
-                
+
                 //for test use
                 intervalCount = setInterval(() => {
-                    if(mediaRecorder.state == 'recording'){
+                    if (mediaRecorder.state == 'recording') {
                         mediaRecorder.stop();
                     }
-                }, 3000) 
-                
-/*
-                intervalCount = setInterval(() => {
-                    if(mediaRecorder.state == 'recording'){
-                        mediaRecorder.stop();
-                    }
-                }, 10000) 
-*/
+                }, 3000)
+
+                /*
+                                intervalCount = setInterval(() => {
+                                    if(mediaRecorder.state == 'recording'){
+                                        mediaRecorder.stop();
+                                    }
+                                }, 10000) 
+                */
                 mediaRecorder.onstop = () => {
                     const blob = new Blob(chunks, { type: 'audio/webm' });
                     chunks = [];
-                    
+
                     const formData = new FormData();
                     formData.append('audio', blob, 'recording.webm');
 
                     fetch('/upload', {
                         method: 'POST',
                         body: formData
-                    })//.then(response => console.log(response))
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.transcription){
-                            transcriptionAll.push(data.transcription);
-                            const transcribeLine = document.getElementById('transcription')
-                            transcribeLine.textContent = transcriptionAll.join(" ");
-                        }else if (data.error) {
-                            console.error('Error in server response:', data.error);
-                        }
-                    })
-                    .catch(console.error);
+                    }).then(response => response.json())
+                        .then(data => {
+                            if (data.transcription) {
+                                transcriptionAll.push(data.transcription);
+                                const transcribeLine = document.getElementById('transcription')
+                                transcribeLine.textContent = transcriptionAll.join(" ");
+                            } else if (data.error) {
+                                console.error('Error in server response:', data.error);
+                            }
+                        })
+                        .catch(console.error);
 
                     mediaRecorder.start();
                 }
@@ -229,4 +232,5 @@
         });
     </script>
 </body>
+
 </html>

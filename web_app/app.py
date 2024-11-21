@@ -19,6 +19,7 @@ user_input = db["audio and transcription"]
 
 @app.route("/")
 def index():
+    print(os.path.join(os.path.dirname(__file__), 'uploads'))
     total_swears = sum(doc["count"] for doc in swears_collection.find())
     return render_template("index.html", swears=total_swears)
 
@@ -40,7 +41,7 @@ def upload_audio():
         return jsonify({"error": "No selected file"}), 400
     
     # create file path under uploads folder
-    uploaded_file_path = os.path.join('uploads', file.filename)
+    uploaded_file_path = os.path.join(os.path.dirname(__file__), 'uploads', file.filename)
     os.makedirs('uploads', exist_ok=True)
     # save file at the path with name
     file.save(uploaded_file_path)
@@ -72,7 +73,7 @@ def upload_audio():
             'transcription': transcription_text,
         }
         db["audio and transcription"].insert_one(input_data)
-        print(transcription_text)
+        print("Transcription text: ", transcription_text)
         return jsonify({"transcription": transcription_text}), 200
 
         #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200

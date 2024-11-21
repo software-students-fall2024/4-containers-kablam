@@ -1,7 +1,8 @@
 # for test only (in order to enable app.py to find the src folder without build the image)
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 # for project use
 from flask import Flask, render_template, jsonify, request
@@ -9,13 +10,14 @@ from pymongo import MongoClient
 from src.machine_learning_client.speech_recog import transcription
 #import os
 import subprocess
-#import speech_recognition as sr
 
 app = Flask(__name__)
-client = MongoClient("mongodb://localhost:27017/")
+#client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb://mongo:27017/")
+
 db = client["swearDB"] 
 swears_collection = db["swears"]
-user_input = db["audio and transcription"]
+#user_input = db["audio and transcription"]
 
 @app.route("/")
 def index():
@@ -32,7 +34,6 @@ def get_swear_counts():
     return jsonify(swear_counts)
 
 @app.route('/upload', methods=['POST'])
-
 def upload_audio():
     if 'audio' not in request.files:
         return jsonify({"error": "No file part"}), 400
@@ -64,18 +65,19 @@ def upload_audio():
             print(f"FFmpeg conversion failed: {e}")
 
         # Remove the original uploaded file after conversion
-        os.remove(uploaded_file_path)
-   
-        #immediately transcribe the audio file without saving it to the database
-        transcription_text = transcription(converted_file_path)
-        #save both .wav audio file and transcription to db
-        input_data={
-            'audio': converted_file_path,
-            'transcription': transcription_text,
-        }
-        db["audio and transcription"].insert_one(input_data)
-        print(transcription_text)
-        return jsonify({"transcription": transcription_text}), 200
+        os.remove(uploaded_file_path)      
+        return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
+    except Exception as e:
+        print(f"Error during processing: {e}")
+        return jsonify({"error": f"Error processing the audio file: {str(e)}"}), 500
 
-        #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
-    excep
+@app.route('/transcription', methods = ['GET'])
+def transcription():
+    try:
+        transcription_data = db["audio and transcription"].find_one({},{"transcription":1})
+        return jsonify({"transcription": transcription_data["transcription"]}), 200
+    except Exception as e:
+        return jsonify({"error": f"Error retrieving transcriptions: {str(e)}"}), 500
+        
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=3000)

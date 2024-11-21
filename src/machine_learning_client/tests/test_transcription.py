@@ -5,7 +5,7 @@
 
 import os
 # Get the directory where the current script is located
-current_dir = os.path.dirname(__file__)
+current_dir = os.path.abspath(os.path.dirname(__file__))
 # Construct the full path to the audio file
 audio_file_path = os.path.join(current_dir, "normalAudio.wav")
 

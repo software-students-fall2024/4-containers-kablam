@@ -1,6 +1,6 @@
 name: ML Client Tests
 on:
-  push:
+  # push:
   pull_request:
     types: [opened, closed]
 jobs:

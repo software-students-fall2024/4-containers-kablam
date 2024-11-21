@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+audiototext = {file = "src/machine_learning_client", editable = true}
 
 [dev-packages]
 

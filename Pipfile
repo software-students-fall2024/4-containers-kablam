@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 audiototext = {file = "src/machine_learning_client", editable = true}
+pymongo = "*"
 
 [dev-packages]
 

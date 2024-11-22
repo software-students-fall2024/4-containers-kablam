@@ -6,7 +6,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src'
 # for project use
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
-from speech_recog import transcription
+# from speech_recog import transcription
+import requests
 #import os
 import subprocess
 #import speech_recognition as sr
@@ -64,17 +65,25 @@ def upload_audio():
 
         # Remove the original uploaded file after conversion
         os.remove(uploaded_file_path)
+
+        # Open file to be sent to ML server
+        with open(converted_file_path, 'rb') as audio_file:
+            files = {'audio': (os.path.basename(converted_file_path), audio_file, 'audio/wav')}
+            url = "http://localhost:8080/accept_file"
+            response = requests.post(url, files=files)
+            print(response)
    
         #immediately transcribe the audio file without saving it to the database
-        transcription_text = transcription(converted_file_path)
-        #save both .wav audio file and transcription to db
-        input_data={
-            'audio': converted_file_path,
-            'transcription': transcription_text,
-        }
-        db["audio and transcription"].insert_one(input_data)
-        print("Transcription text: ", transcription_text)
-        return jsonify({"transcription": transcription_text}), 200
+        # transcription_text = transcription(converted_file_path)
+        # #save both .wav audio file and transcription to db
+        # input_data={
+        #     'audio': converted_file_path,
+        #     'transcription': transcription_text,
+        # }
+        # db["audio and transcription"].insert_one(input_data)
+        # print("Transcription text: ", transcription_text)
+        # return jsonify({"transcription": transcription_text}), 200
+
 
         #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
     except Exception as e:

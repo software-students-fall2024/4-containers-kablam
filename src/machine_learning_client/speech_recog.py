@@ -10,8 +10,14 @@ def transcription(file_path):
             r.adjust_for_ambient_noise(source, duration = 0.2)
             audio = r.record(source)
             
-            text = r.recognize_google(audio)
-            return text.lower()
+            try:
+               text = r.recognize_google(audio)
+               return text.lower()
+            except sr.UnknownValueError:
+               # Log the error and return an empty string or None
+               print(f"Warning: Could not understand audio in {file_path}")
+               return None
+
 
     except sr.UnknownValueError:
         raise ValueError("Audio cannot be understood")
@@ -34,9 +40,7 @@ def accept_audio():
 
     transcription_text = transcription(uploaded_file_path)
     print("Transcription text: ", transcription_text)
-
-
-    # TRANSCRIBE FILE
+    return jsonify({"transcription": transcription_text}), 200
     
 
 @app.route('/', methods=['GET'])

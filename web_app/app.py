@@ -71,7 +71,15 @@ def upload_audio():
             files = {'audio': (os.path.basename(converted_file_path), audio_file, 'audio/wav')}
             url = "http://localhost:8080/accept_file"
             response = requests.post(url, files=files)
-            print(response)
+            if response.status_code == 200:
+               transcription = response.json()['transcription']
+               print(transcription)
+               if(transcription is not None):
+                   pass # Upload to db here?
+               return jsonify("Uploaded successfully"), 200
+            else:
+                return jsonify("Failed to transcribe"), 400
+
    
         # #immediately transcribe the audio file without saving it to the database
         # transcription_text = transcription(converted_file_path)

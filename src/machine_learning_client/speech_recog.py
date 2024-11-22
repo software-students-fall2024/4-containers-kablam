@@ -44,8 +44,9 @@ def accept_audio():
 
     transcription_text = transcription(uploaded_file_path)
     print("Transcription text: ", transcription_text)
+
     # SWEAR WORDS TO DETECT
-    detectWords = ["hello","apple", "orange"];
+    detectWords = ["hello","apple", "orange","goodbye","test"];
 
     transcription_split = transcription_text.split();
 

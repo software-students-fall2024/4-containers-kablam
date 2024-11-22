@@ -11,6 +11,7 @@ speechrecognition = "*"
 build = "*"
 flask = "*"
 audiototext = {file = ".", editable = true}
+pymongo = "*"
 
 [dev-packages]
 

@@ -26,9 +26,9 @@ def index():
 
 @app.route("/api/swears", methods=["GET"])
 def get_swear_counts():
-    docs = swears_collection.find()
-    for doc in docs:
-        print(doc)
+    # docs = swears_collection.find()
+    # for doc in docs:
+    #     print(doc)
     swear_counts = {doc["word"]: doc["count"] for doc in swears_collection.find()}
     return jsonify(swear_counts)
 
@@ -73,17 +73,24 @@ def upload_audio():
             response = requests.post(url, files=files)
             print(response)
    
-        #immediately transcribe the audio file without saving it to the database
+        # #immediately transcribe the audio file without saving it to the database
         # transcription_text = transcription(converted_file_path)
-        # #save both .wav audio file and transcription to db
-        # input_data={
-        #     'audio': converted_file_path,
-        #     'transcription': transcription_text,
-        # }
-        # db["audio and transcription"].insert_one(input_data)
         # print("Transcription text: ", transcription_text)
-        # return jsonify({"transcription": transcription_text}), 200
 
+        # # SWEAR WORDS TO DETECT
+        # detectWords = ["hello","apple", "orange"];
+
+        # transcription_split = transcription_text.split();
+
+        # for detectWord in detectWords:
+        #     count = transcription_split.count(detectWord);
+        #     if count > 0:
+        #         if swears_collection.find_one({"word":detectWord}):
+        #             swears_collection.update_one({"word":detectWord},{"$inc":{"count":count}})
+        #         else:
+        #             swears_collection.insert_one({"word":detectWord,"count":1})
+                    
+        # return jsonify({"transcription": transcription_text}), 200
 
         #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
     except Exception as e:

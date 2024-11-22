@@ -100,4 +100,4 @@ Go to `localhost:5000` and click on the 'Request Microphone Access' button - you
 
 Speak these words loud and clear and watch the jar fill up!
 
-If you want to add to the list of detectable swear words, you can add to the list of strings in [at line 49 of speech_recog.py in src/machine_learning_client.](https://github.com/software-students-fall2024/4-containers-kablam/blob/b4afdd01ac248f0cc8bfd75250765ec2307fe4de/src/machine_learning_client/speech_recog.py#L49)
+If you want to add to the list of detectable swear words, you can add to the list of strings at [line 49 of speech_recog.py in src/machine_learning_client.](https://github.com/software-students-fall2024/4-containers-kablam/blob/b4afdd01ac248f0cc8bfd75250765ec2307fe4de/src/machine_learning_client/speech_recog.py#L49)

@@ -9,6 +9,7 @@ black = "*"
 pytest = "*"
 speechrecognition = "*"
 build = "*"
+flask = "*"
 audiototext = {file = ".", editable = true}
 
 [dev-packages]

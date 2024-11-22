@@ -40,8 +40,21 @@ def accept_audio():
 
     transcription_text = transcription(uploaded_file_path)
     print("Transcription text: ", transcription_text)
+    # SWEAR WORDS TO DETECT
+    detectWords = ["hello","apple", "orange"];
+
+    transcription_split = transcription_text.split();
+
+    for detectWord in detectWords:
+        count = transcription_split.count(detectWord);
+        if count > 0:
+            if swears_collection.find_one({"word":detectWord}):
+                swears_collection.update_one({"word":detectWord},{"$inc":{"count":count}})
+            else:
+                swears_collection.insert_one({"word":detectWord,"count":1})
+
     return jsonify({"transcription": transcription_text}), 200
-    
+
 
 @app.route('/', methods=['GET'])
 def test_server():

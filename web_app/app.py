@@ -81,26 +81,6 @@ def upload_audio():
                 return jsonify("Failed to transcribe"), 400
 
    
-        # #immediately transcribe the audio file without saving it to the database
-        # transcription_text = transcription(converted_file_path)
-        # print("Transcription text: ", transcription_text)
-
-        # # SWEAR WORDS TO DETECT
-        # detectWords = ["hello","apple", "orange"];
-
-        # transcription_split = transcription_text.split();
-
-        # for detectWord in detectWords:
-        #     count = transcription_split.count(detectWord);
-        #     if count > 0:
-        #         if swears_collection.find_one({"word":detectWord}):
-        #             swears_collection.update_one({"word":detectWord},{"$inc":{"count":count}})
-        #         else:
-        #             swears_collection.insert_one({"word":detectWord,"count":1})
-                    
-        # return jsonify({"transcription": transcription_text}), 200
-
-        #return jsonify({"message": "File successfully converted!", "file_path": converted_file_path}), 200
     except Exception as e:
         print(f"Error during processing: {e}")
         return jsonify({"error": f"Error processing the audio file: {str(e)}"}), 500

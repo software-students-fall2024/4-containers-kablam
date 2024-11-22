@@ -8,17 +8,12 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 
-# Update and install FFmpeg
-RUN apt-get update && \
-    apt-get install -y ffmpeg \
-    && rm -rf /var/lib/apt/lists/*
-
 # the ADD command is how you add files from your local machine into a Docker image
 # Copy the current directory contents into the container at /app
 ADD . .
 
 # expose the port that the Flask app is running on... by default 5000
-EXPOSE 5000
+EXPOSE 8080
 
 # Run app.py when the container launches
-CMD [ "python3", "-m" , "flask", "run", "-h", "0.0.0.0" ]
+CMD [ "python3", "-m" , "speech_recog", "-h", "0.0.0.0" ]

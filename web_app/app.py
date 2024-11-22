@@ -13,7 +13,7 @@ import subprocess
 #import speech_recognition as sr
 
 app = Flask(__name__)
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb://mongodb:27017/")
 db = client["swearDB"] 
 swears_collection = db["swears"]
 
@@ -68,7 +68,7 @@ def upload_audio():
         # Open file to be sent to ML server
         with open(converted_file_path, 'rb') as audio_file:
             files = {'audio': (os.path.basename(converted_file_path), audio_file, 'audio/wav')}
-            url = "http://localhost:8080/accept_file"
+            url = "http://speech:8080/accept_file"
             response = requests.post(url, files=files)
             if response.status_code == 200:
                transcription = response.json()['transcription']

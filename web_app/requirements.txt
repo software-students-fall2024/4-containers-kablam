@@ -1,6 +1,6 @@
 -i https://pypi.org/simple
 astroid==3.3.5; python_full_version >= '3.9.0'
--e ../src/machine_learning_client
+# -e ../src/machine_learning_client
 black==24.10.0; python_version >= '3.9'
 blinker==1.9.0; python_version >= '3.9'
 certifi==2024.8.30; python_version >= '3.6'

@@ -16,7 +16,6 @@ app = Flask(__name__)
 client = MongoClient("mongodb://localhost:27017/")
 db = client["swearDB"] 
 swears_collection = db["swears"]
-user_input = db["audio and transcription"]
 
 @app.route("/")
 def index():

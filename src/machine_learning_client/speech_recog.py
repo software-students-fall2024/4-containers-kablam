@@ -1,7 +1,11 @@
 import speech_recognition as sr
 from flask import Flask, request, jsonify
+from pymongo import MongoClient
 import os
 app = Flask(__name__)
+client = MongoClient("mongodb://localhost:27017/")
+db = client["swearDB"] 
+swears_collection = db["swears"]
 
 def transcription(file_path):
     r = sr.Recognizer()

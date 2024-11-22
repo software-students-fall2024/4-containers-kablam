@@ -1,9 +1,16 @@
 ![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg)
 ![ML Client](https://github.com/software-students-fall2024/4-containers-kablam/actions/workflows/ml-tests.yaml/badge.svg)
 
-# Containerized App Exercise
+# Swear Jar Web App
 
-Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
+## Description
+A web app that accesses the user’s microphone and detects when a swear word is said. A swear jar/total swear count is displayed.
+
+## Team Members
+- Madison Phung, [Github](https://github.com/mkphung29)
+- Stephen Spencer-Wong, [Github](https://github.com/StephenS2021)
+- William Xie, [Github](https://github.com/seeyeh)
+- May Zhou, [Github](https://github.com/zz4206)
 
 ## Database: Setting Up
 

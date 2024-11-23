@@ -15,7 +15,7 @@ A web app that accesses the user’s microphone and detects when a swear word is
 - May Zhou, [Github](https://github.com/zz4206)
 
 ## Docker Network
-Before starting any containers, run this command to create the Docker netowrk, swear_jar
+Before starting any containers, run this command to create the Docker network swear_jar
 ```bash
 docker network create swear_jar
 ```
